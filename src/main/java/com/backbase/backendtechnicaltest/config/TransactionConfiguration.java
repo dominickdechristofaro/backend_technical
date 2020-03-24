@@ -31,6 +31,6 @@ public class TransactionConfiguration {
 
     @Bean
     public WebClient webClient() {
-        return WebClient.builder().baseUrl(baseUrl).build();
+        return WebClient.create();
     }
 }

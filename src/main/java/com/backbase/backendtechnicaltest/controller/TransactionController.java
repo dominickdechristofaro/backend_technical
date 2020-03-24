@@ -20,7 +20,7 @@ public class TransactionController {
     // Methods
     @GetMapping(value = "/transactions")
     @ResponseStatus(HttpStatus.OK)
-    public List<Transactions> getTransactions() {
+    public List<TransactionDto> getTransactions() {
         return transactionServiceLayer.transformOpenBankObjectToBackbaseObject();
     }
 }

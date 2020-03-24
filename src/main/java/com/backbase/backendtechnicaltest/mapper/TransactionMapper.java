@@ -5,9 +5,12 @@ import com.backbase.backendtechnicaltest.model.Transaction;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface TransactionMapper {
+
+    TransactionMapper INSTANCE = Mappers.getMapper(TransactionMapper.class);
 
     @Mappings({
             @Mapping(source = "id", target = "id"),
