@@ -21,8 +21,6 @@ import java.util.List;
 @Service
 public class TransactionServiceLayer {
     @Autowired
-    private RestTemplate restTemplate;
-    @Autowired
     private TransactionConfiguration transactionConfiguration;
     @Autowired
     private WebClient webClient;
@@ -33,11 +31,9 @@ public class TransactionServiceLayer {
      */
     public List<TransactionDto> transformOpenBankObjectToBackbaseObject() {
         Transactions transactionList = webClient.get().uri(transactionConfiguration.getBaseUrl() +  transactionConfiguration.getUri()).retrieve().bodyToMono(Transactions.class).block();
-//        // Get the List of transactions from the OpenBank API
-//        ArrayList<Transaction> transactionList = restTemplate.getForObject(transactionConfiguration.getBaseUrl() + transactionConfiguration.getUri(), Transactions.class).getTransactions();
-       ArrayList<TransactionDto> transactionDtoList = new ArrayList<>();
-        if (transactionList != null && !CollectionUtils.isEmpty(transactionList.getTransactions())) {
-            transactionList.getTransactions().stream().forEach(x -> transactionDtoList.add(TransactionMapper.INSTANCE.transactionToBackbaseDTO(x)));
+        ArrayList<TransactionDto> transactionDtoList = new ArrayList<>();
+        if (transactionList != null && !transactionList.getTransactions().isEmpty()) {
+            transactionList.getTransactions().forEach(transaction -> transactionDtoList.add(TransactionMapper.INSTANCE.transactionToBackbaseDTO(transaction)));
         }
         return transactionDtoList;
     }
